@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>LA TV Shows | Home</title>
+    <title>Remi's Bookstore | Home</title>
     <meta name="description" content="A Catalog of Shows Set in Los Angeles" />
     <link rel="stylesheet" href="style.css" />
     <script type="text/javascript" src="scripts.js"></script>
@@ -9,23 +9,38 @@
 
   <body>
     <header class="main-header">
-      <h1 class="title">LA TV Shows</h1>
+      <h1 class="title">Remi's Bookstore</h1>
     </header>
-    <div id="card-container"></div>
-    <div class="card" style="display: none">
-      <div class="card-content">
-        <h2>TV Show Title</h2>
-        <img src="" alt="TV Show Poster" />
-        <ul>
-          <li>Bullet Point 1</li>
-          <li>Bullet Point 2</li>
-          <li>Bullet Point 3</li>
-        </ul>
+    <div class="filter-controls">
+      <button class="filter-btn" data-genre="all">All</button>
+      <button class="filter-btn" data-genre="fiction">Fiction</button>
+      <button class="filter-btn" data-genre="science fiction">Science Fiction</button>
+      <button class="filter-btn" data-genre="historical fiction">Historical Fiction</button>
+      <button class="filter-btn" data-genre="nonfiction">Nonfiction</button>
+      <button class="filter-btn" data-genre="fantasy">Fantasy</button>
+      <button class="filter-btn" data-genre="classic">Classic</button>
+      <button class="filter-btn" data-genre="romance">Romance</button>
+      <button class="filter-btn" data-genre="memoir">Memoir</button>
+      <button class="filter-btn" data-genre="poetry">Poetry</button>
+      <button class="filter-btn" data-genre="contemporary">Contemporary</button>
+      <button class="filter-btn" data-genre="young adult">Young Adult</button>
+      <button class="filter-btn" data-genre="dystopia">Dystopia</button>
+      <button class="filter-btn" data-genre="thriller">Thriller</button>
+      <button class="filter-btn" data-genre="mythology">Mythology</button>
+      <button class="filter-btn" data-genre="mystery">Mystery</button>
+      <button class="filter-btn" data-genre="lgbt">LGBT</button>
+      <button class="filter-btn" data-genre="biography">Biography</button>
+    </div>
+    <div id="card-container" class="card-container"></div>
+    <div class="cart-container">
+      <button id="cart-toggle">
+        Cart <span id="cart-count">0</span> ($<span id="cart-total">0.00</span>)
+      </button>
+      <div id="cart-dropdown" class="cart-dropdown">
+        <div id="cart-items"></div>
+        <button id="checkout-btn">Checkout</button>
       </div>
     </div>
-    <div class="footer">
-      <button onclick="quoteAlert();">Get A Quote!</button>
-      <button onclick="removeLastCard();">Remove A Card!</button>
-    </div>
+    <div id="card-container"></div>
   </body>
 </html>

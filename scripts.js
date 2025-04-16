@@ -1,97 +1,202 @@
-/**
- * Data Catalog Project Starter Code - SEA Stage 2
- *
- * This file is where you should be doing most of your work. You should
- * also make changes to the HTML and CSS files, but we want you to prioritize
- * demonstrating your understanding of data structures, and you'll do that
- * with the JavaScript code you write in this file.
- *
- * The comments in this file are only to help you learn how the starter code
- * works. The instructions for the project are in the README. That said, here
- * are the three things you should do first to learn about the starter code:
- * - 1 - Change something small in index.html or style.css, then reload your
- *    browser and make sure you can see that change.
- * - 2 - On your browser, right click anywhere on the page and select
- *    "Inspect" to open the browser developer tools. Then, go to the "console"
- *    tab in the new window that opened up. This console is where you will see
- *    JavaScript errors and logs, which is extremely helpful for debugging.
- *    (These instructions assume you're using Chrome, opening developer tools
- *    may be different on other browsers. We suggest using Chrome.)
- * - 3 - Add another string to the titles array a few lines down. Reload your
- *    browser and observe what happens. You should see a fourth "card" appear
- *    with the string you added to the array, but a broken image.
- *
- */
-
-const FRESH_PRINCE_URL =
-  "https://upload.wikimedia.org/wikipedia/en/3/33/Fresh_Prince_S1_DVD.jpg";
-const CURB_POSTER_URL =
-  "https://m.media-amazon.com/images/M/MV5BZDY1ZGM4OGItMWMyNS00MDAyLWE2Y2MtZTFhMTU0MGI5ZDFlXkEyXkFqcGdeQXVyMDc5ODIzMw@@._V1_FMjpg_UX1000_.jpg";
-const EAST_LOS_HIGH_POSTER_URL =
-  "https://static.wikia.nocookie.net/hulu/images/6/64/East_Los_High.jpg";
-
-// This is an array of strings (TV show titles)
-let titles = [
-  "Fresh Prince of Bel Air",
-  "Curb Your Enthusiasm",
-  "East Los High",
+// Data for books (titles, book covers, genres, and prices)
+const books = [
+  {
+    title: "The Hunger Games",
+    imageURL: "https://m.media-amazon.com/images/I/71un2hI4mcL.jpg",
+    genres: ["young adult", "dystopia", "fiction", "fantasy"],
+    price: 8.78
+  },
+  {
+    title: "Fourth Wing",
+    imageURL: "https://m.media-amazon.com/images/I/71bXcusLgJL.jpg",
+    genres: ["romance", "fantasy", "young adult"],
+    price: 13.88
+  },
+  {
+    title: "Pride and Prejudice",
+    imageURL: "https://m.media-amazon.com/images/I/81a3sr-RgdL.jpg",
+    genres: ["romance", "fiction", "historical fiction", "classic"],
+    price: 7.97
+  },
+  {
+    title: "The Book Thief",
+    imageURL: "https://m.media-amazon.com/images/I/914cHl9v7oL.jpg",
+    genres: ["young adult", "fiction", "historical fiction", "classic"],
+    price: 8.24
+  },
+  {
+    title: "Dark Matter",
+    imageURL: "https://m.media-amazon.com/images/I/71BLt1LP9ML.jpg",
+    genres: ["fantasy", "fiction", "science fiction", "thriller"],
+    price: 9.16
+  },
+  {
+    title: "The Song of Achilles",
+    imageURL: "https://m.media-amazon.com/images/I/81msb6gUBTL.jpg",
+    genres: ["fantasy", "historical fiction", "mythology", "lgbt"],
+    price: 10.77
+  },
+  {
+    title: "People We Meet on Vacation",
+    imageURL: "https://m.media-amazon.com/images/I/71WsX3abgiL.jpg",
+    genres: ["fiction", "contemporary", "romance"],
+    price: 8.24
+  },
+  {
+    title: "Six of Crows",
+    imageURL: "https://m.media-amazon.com/images/I/91tK5sU9oOL.jpg",
+    genres: ["fantasy", "young adult", "fiction"],
+    price: 7.41
+  },
+  {
+    title: "Pachinko",
+    imageURL: "https://m.media-amazon.com/images/I/814EvRgiKpL.jpg",
+    genres: ["historical fiction", "fiction"],
+    price: 11.28
+  },
+  {
+    title: "Circe",
+    imageURL: "https://m.media-amazon.com/images/I/B1eAVSHxJ4L._AC_UF1000,1000_QL80_.jpg",
+    genres: ["fantasy", "fiction", "mythology", "historical fiction"],
+    price: 10.53
+  },
+  {
+    title: "When Breath Becomes Air",
+    imageURL: "https://m.media-amazon.com/images/I/61gwba1pQnL.jpg",
+    genres: ["nonfiction", "memoir", "biography"],
+    price: 10.97
+  },
+  {
+    title: "Persuasion",
+    imageURL: "https://m.media-amazon.com/images/I/71zikHaLT+L._AC_UF1000,1000_QL80_.jpg",
+    genres: ["fiction", "classic", "historical fiction"],
+    price: 7.40
+  },
+  {
+    title: "All the Light We Cannot See",
+    imageURL: "https://m.media-amazon.com/images/I/81RBTG28sCL.jpg",
+    genres: ["historical fiction", "fiction"],
+    price: 11.43
+  },
+  {
+    title: "The Seven Husbands of Evelyn Hugo",
+    imageURL: "https://m.media-amazon.com/images/I/71KcUgYanhL.jpg",
+    genres: ["fiction", "historical fiction", "lgbt"],
+    price: 9.49
+  },
+  {
+    title: "Before the Coffee Gets Cold",
+    imageURL: "https://m.media-amazon.com/images/I/81XuBDUvMaL._AC_UF1000,1000_QL80_.jpg",
+    genres: ["fiction", "fantasy", "contemporary"],
+    price: 11.09
+  }
 ];
-// Your final submission should have much more data than this, and
-// you should use more than just an array of strings to store it all.
 
-// This function adds cards the page to display the data in the array
-function showCards() {
+let currentFilter = "all";
+
+document.addEventListener('DOMContentLoaded', function() {
+  showCards(books); 
+  setupEventListeners();
+});
+
+// Function to display books
+function showCards(booksToDisplay) {
   const cardContainer = document.getElementById("card-container");
-  cardContainer.innerHTML = "";
-  const templateCard = document.querySelector(".card");
+  if (!cardContainer) return;
 
-  for (let i = 0; i < titles.length; i++) {
-    let title = titles[i];
+  cardContainer.innerHTML = booksToDisplay.length === 0
+    ? "<p>No books found.</p>"
+    : booksToDisplay.map(book => `
+        <div class="card">
+          <img src="${book.imageURL}" alt="${book.title}">
+          <h3>${book.title}</h3>
+          <p class="price">$${book.price.toFixed(2)}</p>
+          <button class="add-to-cart" onclick="addToCart(${JSON.stringify(book).replace(/"/g, '&quot;')})">
+            Add to Cart
+          </button>
+        </div>
+      `).join("");
+}
 
-    // This part of the code doesn't scale very well! After you add your
-    // own data, you'll need to do something totally different here.
-    let imageURL = "";
-    if (i == 0) {
-      imageURL = FRESH_PRINCE_URL;
-    } else if (i == 1) {
-      imageURL = CURB_POSTER_URL;
-    } else if (i == 2) {
-      imageURL = EAST_LOS_HIGH_POSTER_URL;
-    }
+// Function to filter books by genre
+function filterBooks(books, genre) {
+  return genre === "all"
+    ? books
+    : books.filter(book => book.genres.includes(genre));
+}
 
-    const nextCard = templateCard.cloneNode(true); // Copy the template card
-    editCardContent(nextCard, title, imageURL); // Edit title and image
-    cardContainer.appendChild(nextCard); // Add new card to the container
+// Function to handle genre filtering
+function filterGenres(genre) {
+  currentFilter = genre;
+  const filteredBooks = filterBooks(books, genre);
+  showCards(filteredBooks);
+}
+
+// Set up event listeners 
+function setupEventListeners() {
+  document.querySelectorAll('.filter-btn').forEach(button => {
+    button.addEventListener('click', function() {
+      document.querySelectorAll('.filter-btn').forEach(btn => 
+        btn.classList.remove('active'));
+      this.classList.add('active');
+      filterGenres(button.dataset.genre);
+    });
+  });
+}
+
+let cart = [];
+
+// Function to add books to cart
+function addToCart(book) {
+  const existingItem = cart.find(item => item.id === book.id);
+  
+  if (existingItem) {
+    existingItem.quantity += 1;
+  } else {
+    cart.push({
+      ...book,
+      quantity: 1,
+      id: book.title.toLowerCase().replace(/\s+/g, '-') 
+    });
+  }
+  updateCartDisplay();
+}
+
+// Function to remove books from cart
+function removeFromCart(bookId) {
+  cart = cart.filter(item => item.id !== bookId);
+  
+  if (cart.length === 0) {
+    document.getElementById('cart-items').innerHTML = "<p>Your cart is empty</p>";
+    document.getElementById('cart-count').textContent = "0";
+    document.getElementById('cart-total').textContent = "0.00";
+  } else {
+    updateCartDisplay();
   }
 }
 
-function editCardContent(card, newTitle, newImageURL) {
-  card.style.display = "block";
+// Function to update cart on main page
+function updateCartDisplay() {
+  const cartCount = document.getElementById('cart-count');
+  const cartTotal = document.getElementById('cart-total');
+  const cartItems = document.getElementById('cart-items');
+  
+  const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+  const totalPrice = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
 
-  const cardHeader = card.querySelector("h2");
-  cardHeader.textContent = newTitle;
-
-  const cardImage = card.querySelector("img");
-  cardImage.src = newImageURL;
-  cardImage.alt = newTitle + " Poster";
-
-  // You can use console.log to help you debug!
-  // View the output by right clicking on your website,
-  // select "Inspect", then click on the "Console" tab
-  console.log("new card:", newTitle, "- html: ", card);
-}
-
-// This calls the addCards() function when the page is first loaded
-document.addEventListener("DOMContentLoaded", showCards);
-
-function quoteAlert() {
-  console.log("Button Clicked!");
-  alert(
-    "I guess I can kiss heaven goodbye, because it got to be a sin to look this good!"
-  );
-}
-
-function removeLastCard() {
-  titles.pop(); // Remove last item in titles array
-  showCards(); // Call showCards again to refresh
+  cartCount.textContent = totalItems;
+  cartTotal.textContent = totalPrice.toFixed(2);
+  
+  cartItems.innerHTML = cart.length === 0
+    ? "<p>Your cart is empty</p>"
+    : cart.map(item => `
+        <div class="cart-item">
+          <img src="${item.imageURL}" alt="${item.title}" width="50">
+          <div>
+            <h4>${item.title}</h4>
+            <p>$${item.price.toFixed(2)} &times; ${item.quantity}</p>
+            <button onclick="removeFromCart('${item.id}')">Remove</button>
+          </div>
+        </div>
+      `).join('');
 }
